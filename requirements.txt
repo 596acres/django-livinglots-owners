@@ -1,0 +1,4 @@
+Django>=1.5.1
+django-autocomplete-light==1.2.2
+django-braces==1.0.0
+git+git://github.com/596acres/django-livinglots/@412a5d23606
