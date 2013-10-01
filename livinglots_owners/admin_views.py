@@ -7,8 +7,7 @@ from django.views.generic import FormView
 from autocomplete_light import ChoiceWidget
 from braces.views import LoginRequiredMixin, PermissionRequiredMixin
 from livinglots import get_owner_model
-
-from ..forms import AddAnotherWidgetWrapper
+from livinglots_forms.widgets import AddAnotherWidgetWrapper
 
 
 class MakeAliasesForm(forms.Form):
