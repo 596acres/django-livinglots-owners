@@ -14,7 +14,6 @@ class OwnerManager(models.Manager):
                 return self.get(aliases__name__iexact=name), False
             except ObjectDoesNotExist:
                 obj = self.create(name=name, **defaults)
-                self._save_initial_revision(obj)
                 return obj, True
 
 
