@@ -7,7 +7,7 @@ from .admin_views import MakeAliasesView
 from .models import Alias
 
 
-class OwnerAdminMixin():
+class OwnerAdminMixin(object):
     actions = ('make_aliases',)
 
     def aliases_summary(self, obj):
@@ -31,6 +31,11 @@ class OwnerAdminMixin():
                 name='%s_make_aliases' % prefix),
         )
         return my_urls + urls
+
+
+class BaseOwnerAdmin(OwnerAdminMixin, admin.ModelAdmin):
+    list_display = ('name', 'owner_type', 'aliases_summary',)
+    search_fields = ('name',)
 
 
 class AliasAdmin(admin.ModelAdmin):
