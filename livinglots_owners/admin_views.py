@@ -8,6 +8,7 @@ from autocomplete_light import ChoiceWidget
 from braces.views import LoginRequiredMixin, PermissionRequiredMixin
 from livinglots import get_owner_model
 from livinglots_forms.widgets import AddAnotherWidgetWrapper
+from .autocomplete_light_registry import *
 
 
 class MakeAliasesForm(forms.Form):
