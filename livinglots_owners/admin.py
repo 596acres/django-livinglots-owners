@@ -38,6 +38,11 @@ class BaseOwnerAdmin(OwnerAdminMixin, admin.ModelAdmin):
     search_fields = ('name',)
 
 
+class BaseOwnerContactAdmin(admin.ModelAdmin):
+    list_display = ('name', 'owner', 'phone', 'email',)
+    search_fields = ('name', 'owner', 'email',)
+
+
 class AliasAdmin(admin.ModelAdmin):
     list_display = ('name',)
 

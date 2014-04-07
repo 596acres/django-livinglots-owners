@@ -2,6 +2,8 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
+from livinglots import get_owner_model_name
+
 
 class OwnerManager(models.Manager):
 
@@ -83,3 +85,18 @@ class BaseOwner(models.Model):
 
         # get rid of the other owner
         other_owner.delete()
+
+
+class BaseOwnerContact(models.Model):
+    """
+    A base class for a person at an owning entity (eg, a city agency) who you
+    can contact to talk about a piece of land.
+    """
+    owner = models.ForeignKey(get_owner_model_name())
+    name = models.CharField(max_length=256)
+    phone = models.CharField(max_length=32, null=True, blank=True)
+    email = models.EmailField(null=True, blank=True)
+    notes = models.TextField(null=True, blank=True)
+
+    class Meta:
+        abstract = True
