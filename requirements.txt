@@ -1,5 +1,5 @@
 Django>=1.5.1
 django-autocomplete-light==1.4.13
-django-braces==1.0.0
+django-braces==1.4.0
 git+git://github.com/596acres/django-livinglots/@412a5d23606
 git+git://github.com/596acres/django-livinglots-forms/@17c25851b
