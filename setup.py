@@ -31,6 +31,7 @@ setup(
     install_requires=[
         'Django>=1.5.1',
         'django-autocomplete-light==1.4.13',
+        'django-braces==1.4.0',
     ],
     packages=find_packages(),
     include_package_data=True,
