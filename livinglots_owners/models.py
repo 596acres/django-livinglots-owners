@@ -2,7 +2,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
-from livinglots import get_owner_model_name
+from livinglots import get_owner_model_name, get_owner_contact_model_name
 
 
 class OwnerManager(models.Manager):
@@ -58,6 +58,12 @@ class BaseOwner(models.Model):
         verbose_name=_('aliases'),
         blank=True,
         null=True,
+    )
+
+    default_contact = models.ForeignKey(get_owner_contact_model_name(),
+        blank=True,
+        null=True,
+        related_name='+',
     )
 
     class Meta:
