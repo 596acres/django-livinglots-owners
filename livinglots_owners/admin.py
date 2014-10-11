@@ -35,11 +35,13 @@ class OwnerAdminMixin(object):
 
 class BaseOwnerAdmin(OwnerAdminMixin, admin.ModelAdmin):
     list_display = ('name', 'owner_type', 'aliases_summary',)
+    list_filter = ('owner_type',)
     search_fields = ('name',)
 
 
 class BaseOwnerContactAdmin(admin.ModelAdmin):
     list_display = ('name', 'owner', 'phone', 'email',)
+    list_filter = ('owner__owner_type',)
     search_fields = ('name', 'owner', 'email',)
 
 
