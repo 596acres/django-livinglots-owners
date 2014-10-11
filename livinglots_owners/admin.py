@@ -1,7 +1,10 @@
 from django.conf.urls import patterns, url
 from django.contrib import admin
 from django.core.urlresolvers import reverse
+from django.forms import ModelForm
 from django.http import HttpResponseRedirect
+
+from livinglots import get_owner_contact_model
 
 from .admin_views import MakeAliasesView
 from .models import Alias
@@ -33,7 +36,15 @@ class OwnerAdminMixin(object):
         return my_urls + urls
 
 
+class BaseOwnerForm(ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(BaseOwnerForm, self).__init__(*args, **kwargs)
+        self.fields['default_contact'].queryset = \
+            get_owner_contact_model().objects.filter(owner=self.instance)
+
+
 class BaseOwnerAdmin(OwnerAdminMixin, admin.ModelAdmin):
+    form = BaseOwnerForm
     list_display = ('name', 'owner_type', 'aliases_summary',)
     list_filter = ('owner_type',)
     search_fields = ('name',)
