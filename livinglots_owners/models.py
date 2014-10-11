@@ -1,5 +1,6 @@
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
+from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
 
 from livinglots import get_owner_model_name, get_owner_contact_model_name
@@ -19,13 +20,14 @@ class OwnerManager(models.Manager):
                 return obj, True
 
 
+@python_2_unicode_compatible
 class Alias(models.Model):
     name = models.CharField(_('name'),
         max_length=256,
         unique=True,
     )
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
     class Meta:
@@ -33,6 +35,7 @@ class Alias(models.Model):
         verbose_name_plural = _('aliases')
 
 
+@python_2_unicode_compatible
 class BaseOwner(models.Model):
 
     objects = OwnerManager()
@@ -69,8 +72,8 @@ class BaseOwner(models.Model):
     class Meta:
         abstract = True
 
-    def __unicode__(self):
-        return u'%s (%s)' % (self.name, self.owner_type)
+    def __str__(self):
+        return '%s (%s)' % (self.name, self.owner_type)
 
     def add_alias(self, alias_name):
         alias, created = Alias.objects.get_or_create(name=alias_name)
@@ -93,6 +96,7 @@ class BaseOwner(models.Model):
         other_owner.delete()
 
 
+@python_2_unicode_compatible
 class BaseOwnerContact(models.Model):
     """
     A base class for a person at an owning entity (eg, a city agency) who you
@@ -107,3 +111,6 @@ class BaseOwnerContact(models.Model):
 
     class Meta:
         abstract = True
+
+    def __str__(self):
+        return '%s' % self.name
