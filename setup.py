@@ -29,8 +29,8 @@ setup(
     platforms=['OS Independent'],
     classifiers=CLASSIFIERS,
     install_requires=[
-        'Django>=1.5.1',
-        'django-autocomplete-light==1.4.13',
+        'Django>=1.7.0',
+        'django-autocomplete-light==2.0.9',
         'django-braces==1.4.0',
     ],
     packages=find_packages(),
