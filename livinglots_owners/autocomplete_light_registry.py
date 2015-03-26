@@ -1,18 +1,26 @@
 from autocomplete_light import AutocompleteModelBase, register
 
-from livinglots import get_owner_model
+from livinglots import get_owner_model, get_owner_contact_model
 
 
-class OwnerAutocomplete(AutocompleteModelBase):
+class AdminAutocomplete(AutocompleteModelBase):
+
+    def choices_for_request(self):
+        choices = super(AdminAutocomplete, self).choices_for_request()
+        if not self.request.user.is_staff:
+            choices = choices.none()
+        return choices
+
+
+class OwnerAutocomplete(AdminAutocomplete):
     autocomplete_js_attributes = {'placeholder': 'Owner name',}
     search_fields = ('name',)
 
-    def choices_for_request(self):
-        choices = super(OwnerAutocomplete, self).choices_for_request()
 
-        if not self.request.user.is_staff:
-            choices = choices.none()
+class OwnerContactAutocomplete(AdminAutocomplete):
+    autocomplete_js_attributes = {'placeholder': 'Owner contact',}
+    search_fields = ('name',)
 
-        return choices
 
 register(get_owner_model(), OwnerAutocomplete)
+register(get_owner_contact_model(), OwnerContactAutocomplete)
