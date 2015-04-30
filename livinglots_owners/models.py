@@ -60,7 +60,6 @@ class BaseOwner(models.Model):
         help_text=_('Other names for this owner'),
         verbose_name=_('aliases'),
         blank=True,
-        null=True,
     )
 
     default_contact = models.ForeignKey(get_owner_contact_model_name(),
