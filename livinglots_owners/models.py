@@ -113,3 +113,28 @@ class BaseOwnerContact(models.Model):
 
     def __str__(self):
         return '%s' % self.name
+
+
+@python_2_unicode_compatible
+class BaseOwnerGroup(models.Model):
+    name = models.CharField(max_length=256)
+
+    OWNER_TYPE_CHOICES = (
+        ('private', 'private'),
+        ('public', 'public'),
+        ('unknown', 'unknown'),
+    )
+    owner_type = models.CharField(_('owner type'),
+        choices=OWNER_TYPE_CHOICES,
+        default='private',
+        max_length=20,
+    )
+
+    owners = models.ManyToManyField(get_owner_model_name())
+
+    class Meta:
+        abstract = True
+        ordering = ['name',]
+
+    def __str__(self):
+        return '%s (%s)' % (self.name, self.owner_type)

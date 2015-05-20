@@ -56,6 +56,12 @@ class BaseOwnerContactAdmin(admin.ModelAdmin):
     search_fields = ('name', 'owner', 'email',)
 
 
+class BaseOwnerGroupAdmin(admin.ModelAdmin):
+    list_display = ('name', 'owner_type',)
+    list_filter = ('owner_type',)
+    search_fields = ('name',)
+
+
 class AliasAdmin(admin.ModelAdmin):
     list_display = ('name',)
 
