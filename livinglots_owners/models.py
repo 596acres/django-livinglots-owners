@@ -56,7 +56,7 @@ class BaseOwner(models.Model):
         max_length=20,
     )
 
-    aliases = models.ManyToManyField('Alias',
+    aliases = models.ManyToManyField('livinglots_owners.Alias',
         help_text=_('Other names for this owner'),
         verbose_name=_('aliases'),
         blank=True,
