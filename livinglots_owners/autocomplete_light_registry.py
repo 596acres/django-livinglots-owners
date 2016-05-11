@@ -1,4 +1,5 @@
-from autocomplete_light import AutocompleteModelBase, register
+from autocomplete_light.autocomplete.shortcuts import AutocompleteModelBase
+from autocomplete_light.registry import register
 
 from livinglots import get_owner_model, get_owner_contact_model
 
