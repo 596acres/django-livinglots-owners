@@ -1,4 +1,4 @@
-from django.core.exceptions import ObjectDoesNotExist
+from django.core.exceptions import MultipleObjectsReturned, ObjectDoesNotExist
 from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
@@ -8,10 +8,16 @@ from livinglots import get_owner_model_name, get_owner_contact_model_name
 
 class OwnerManager(models.Manager):
 
-    def get_or_create(self, name, defaults={}):
+    def get_or_create(self, name, defaults={}, ignorecase=True):
         """Get or create an owner while taking aliases into account."""
         try:
-            return self.get(name__iexact=name), False
+            if ignorecase:
+                try:
+                    return self.get(name__iexact=name), False
+                except MultipleObjectsReturned:
+                    return self.get(name__exact=name), False
+            else:
+                return self.get(name__exact=name), False
         except ObjectDoesNotExist:
             try:
                 return self.get(aliases__name__iexact=name), False
