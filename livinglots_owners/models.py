@@ -89,8 +89,9 @@ class BaseOwner(models.Model):
         """Make other_owner an alias for this owner."""
 
         # redirect all relationships to this owner
+        # XXX deprecated in Django 1.10
         for related in self._meta.get_all_related_objects():
-            related.model.objects.filter(owner=other_owner).update(owner=self)
+            related.related_model.objects.filter(owner=other_owner).update(owner=self)
 
         # redirect aliases to this owner
         for alias in other_owner.aliases.all():
