@@ -21,6 +21,8 @@ class OwnerManager(models.Manager):
         except ObjectDoesNotExist:
             try:
                 return self.get(aliases__name__iexact=name), False
+            except MultipleObjectsReturned:
+                return self.get(aliases__name__exact=name), False
             except ObjectDoesNotExist:
                 obj = self.create(name=name, **defaults)
                 return obj, True
