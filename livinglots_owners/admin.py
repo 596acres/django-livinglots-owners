@@ -1,4 +1,4 @@
-from django.conf.urls import patterns, url
+from django.conf.urls import url
 from django.contrib import admin
 from django.core.urlresolvers import reverse
 from django.forms import ModelForm
@@ -29,10 +29,10 @@ class OwnerAdminMixin(object):
         prefix = "%s_%s" % (app_label, object_name)
 
         urls = super(OwnerAdminMixin, self).get_urls()
-        my_urls = patterns('',
+        my_urls = [
             url(r'^make-aliases/', MakeAliasesView.as_view(),
                 name='%s_make_aliases' % prefix),
-        )
+        ]
         return my_urls + urls
 
 
