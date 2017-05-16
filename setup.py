@@ -29,7 +29,7 @@ setup(
     platforms=['OS Independent'],
     classifiers=CLASSIFIERS,
     install_requires=[
-        'Django>=1.7.0',
+        'Django>=1.11.0',
         'django-autocomplete-light==2.0.9',
         'django-braces==1.4.0',
     ],
