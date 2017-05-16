@@ -1,4 +1,4 @@
-from django.core.exceptions import MultipleObjectsReturned, ObjectDoesNotExist
+from django.core.exceptions import FieldError, MultipleObjectsReturned, ObjectDoesNotExist
 from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
@@ -91,9 +91,14 @@ class BaseOwner(models.Model):
         """Make other_owner an alias for this owner."""
 
         # redirect all relationships to this owner
-        # XXX deprecated in Django 1.10
-        for related in self._meta.get_all_related_objects():
-            related.related_model.objects.filter(owner=other_owner).update(owner=self)
+        for field in self._meta.get_fields():
+            # Field has no related model, skip it
+            if not field.related_model: continue
+            try:
+                field.related_model.objects.filter(owner=other_owner).update(owner=self)
+            except FieldError:
+                # Related model has no owner field, skip it
+                pass
 
         # redirect aliases to this owner
         for alias in other_owner.aliases.all():
