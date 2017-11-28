@@ -4,21 +4,17 @@ from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext as _
 from django.views.generic import FormView
 
-from autocomplete_light.widgets import ChoiceWidget
 from braces.views import LoginRequiredMixin, PermissionRequiredMixin
+from dal import autocomplete
 from livinglots import get_owner_model
 from livinglots_forms.widgets import AddAnotherWidgetWrapper
-from .autocomplete_light_registry import *
 
 
 class MakeAliasesForm(forms.Form):
     owner = forms.ModelChoiceField(
         # NB, does not exclude owners_to_delete
         queryset=get_owner_model().objects.all().order_by('name'),
-        widget=AddAnotherWidgetWrapper(
-            ChoiceWidget('OwnerAutocomplete'),
-            get_owner_model(),
-        )
+        widget=autocomplete.ModelSelect2('owner-autocomplete')
     )
 
     owners_to_delete = forms.ModelMultipleChoiceField(
