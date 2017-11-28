@@ -14,7 +14,7 @@ class MakeAliasesForm(forms.Form):
     owner = forms.ModelChoiceField(
         # NB, does not exclude owners_to_delete
         queryset=get_owner_model().objects.all().order_by('name'),
-        widget=autocomplete.ModelSelect2('owner-autocomplete')
+        widget=autocomplete.ModelSelect2('owners:owner-autocomplete')
     )
 
     owners_to_delete = forms.ModelMultipleChoiceField(
