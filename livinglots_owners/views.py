@@ -11,7 +11,7 @@ class OwnerAutocomplete(autocomplete.Select2QuerySetView):
         qs = get_owner_model().objects.all()
         if self.q:
             qs = qs.filter(name__icontains=self.q)
-        
+
         owner_type = self.forwarded.get('owner_type', None)
         if owner_type:
             qs = qs.filter(owner_type=owner_type)
